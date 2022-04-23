@@ -16,3 +16,11 @@
 
 ## Starting
 `$ superkiosk`
+
+
+## Exiting Superkiosk
+1: Press Control+I
+<br >
+2: Type your password specified in main.js
+<br >
+3: Press enter or submit.
