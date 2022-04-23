@@ -4,3 +4,10 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+
+
+const { BrowserWindow } = require('@electron/remote')
+const main = require('@electron/remote').require('./main')
+if(window.client){
+    window.location.replace(main.url)
+}

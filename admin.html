@@ -1,0 +1,65 @@
+<script src="./renderer.js"></script>
+<center>
+    <br />
+    <br />
+    <h1>SuperKiosk</h1>
+    <h2>By Asher Myers</h2>
+    <br />
+    <br />
+    <input type="password" placeholder="Password" id="psw" onkeypress="handle_txt(event)" autofocus><button
+        onclick="submit()">Submit</button>
+    <br />
+    <style>
+        #psw_err {
+            color: red;
+            display: none;
+        }
+
+        * {
+            font-family: sans-serif;
+        }
+
+        input {
+            padding: 10px 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+        }
+
+        body {
+            zoom: 140%;
+        }
+
+        .countdown {
+            position: absolute;
+            bottom: 0;
+            right: 1px;
+        }
+    </style>
+    <a id="psw_err">Password Incorrect.</a>
+    <a class="countdown" id="countdown" onclick="main.relaunch()">30 Seconds Remaining</a>
+</center>
+<script>
+    function submit() {
+        document.getElementById("psw_err").style.display = "none"
+        if (main.disable(document.getElementById("psw").value) == false) {
+            document.getElementById("psw_err").style.display = "block"
+        }
+    }
+
+    function handle_txt(e) {
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            submit()
+        }
+    }
+    let seconds = 30;
+    setInterval(function () {
+        seconds = seconds - 1;
+        document.getElementById("countdown").innerText = seconds + " Seconds Remaining."
+        if (seconds == -1) {
+            main.relaunch()
+        }
+    }, 1000)
+</script>

@@ -1,22 +1,30 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "superkiosk",
+  "version": "2.0.0",
+  "description": "Electron based kiosk application.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "app:dist": "electron-builder --linux snap",
+    "upgrade-node": "n 17"
   },
   "repository": "https://github.com/electron/electron-quick-start",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
-  ],
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^18.1.0"
+  },
+  "build": {
+    "appId": "superkiosk",
+    "target": [
+      {
+        "target": "snap"
+      }
+    ]
+  },
+  "dependencies": {
+    "@electron/remote": "^2.0.8",
+    "n": "^8.2.0",
+    "shelljs": "^0.8.5"
   }
 }

@@ -1,28 +1,66 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+/* Start Of Config */
+const url = "https://google.com"
+let production = true;
+const password = "password"
+/* End Of Config */
+require('@electron/remote/main').initialize()
+
+
+const { app, BrowserWindow, globalShortcut } = require('electron')
+var shell = require('shelljs');
+if (production) {
+  shell.exec('xfce4-panel -q');
+}
 const path = require('path')
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+  let mainWindow = new BrowserWindow({
+    show: false,
+    closable: false,
+    frame: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      enableRemoteModule: true,
+      nodeIntegration: true,
+      contextIsolation: false,
+      preload: path.join(app.getAppPath(), 'preload.js')
+    }
+  })
+  require('@electron/remote/main').enable(mainWindow.webContents)
+
+
+  let ret = globalShortcut.register('Control+I', () => {
+    if (mainWindow !== null) {
+      mainWindow.loadFile('admin.html')
     }
   })
 
+  mainWindow.maximize()
+  mainWindow.show()
+  mainWindow.setFullScreen(true)
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
+  if (production) {
+    mainWindow.on('close', function () { //   <---- Catch close event
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+      if (production) {
+        return app.relaunch();
+      }
+
+    });
+    app.on('browser-window-blur', (event, win) => {
+      if (mainWindow == null) { return; }
+      mainWindow.focus()
+    })
+  }
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+
   createWindow()
 
   app.on('activate', function () {
@@ -39,5 +77,25 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
+
+
+
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+exports.disable = function (e) {
+  if (e == password) {
+    production = false;
+    shell.exec('xfce4-panel -r');
+    app.quit()
+  } else {
+    return false;
+  }
+}
+
+exports.url = url;
+
+exports.relaunch = function () {
+  app.quit()
+}
