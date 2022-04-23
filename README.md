@@ -1,9 +1,11 @@
 ## Quickstart
 1: `git clone https://github.com/ashermyers/superkiosk`
 <br >
-2: `yarn` (Install Dependencies).
+2: `cd superkiosk`
 <br >
-3: Edit Config in main.js
+3: `yarn` (Install Dependencies).
+<br >
+4: Edit Config in main.js
 
 ## Building
 1: `yarn add electron-builder`
