@@ -8,13 +8,11 @@
 4: Edit Config in main.js
 
 ## Building
-1: `yarn add electron-builder`
+1: `yarn app:dist`
 <br >
-2: `yarn app:dist`
+2: `cd dist`
 <br >
-3: `cd dist`
-<br >
-4: `snap install superkiosk_2.0.0_amd64.snap --dangerous`
+3: `snap install superkiosk_2.0.0_amd64.snap --dangerous`
 
 ## Starting
 `$ superkiosk`
